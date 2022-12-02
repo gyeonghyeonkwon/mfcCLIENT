@@ -17,7 +17,7 @@
 int MyClient::ProcessRecvData(SOCKET ah_socket, unsigned a_msg_id, char* ap_recv_data, BS a_body_size)
 
 {
-	if (a_msg_id == NM_CHAT_DATA) {
+	if (a_msg_id == NM_CHAT_DATA) { // 수신된 데이터가 채팅 데이터인 경우 리스트박스에 추가한다
 		mp_parent -> AddEventString((wchar_t *)ap_recv_data);
 	}
 	return 1;
@@ -58,7 +58,7 @@ BOOL CclientDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
-	m_client.ConnectToServer(L"192.168.219.104", 50000, m_hWnd); //서버에 접속함
+	m_client.ConnectToServer(L"192.168.219.104", 50000, m_hWnd); //아이피가 192.168.219.104 이고 포트가 50000 이 설정되어있는 서버에 접속을한다   
 
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
@@ -116,8 +116,8 @@ void CclientDlg::OnBnClickedSendBtn()
 		m_client.SendFrameData(NM_CHAT_DATA, (const char*)(const wchar_t*)str, (str.GetLength() + 1) * 2);
 	}
 }
-//리스트박스에 문자열이 추가가되고 커서가 자동으로 설정이된다
-void CclientDlg::AddEventString(const wchar_t* ap_string)
+
+void CclientDlg::AddEventString(const wchar_t* ap_string) //리스트박스에 문자열이 추가가되고 커서가 자동으로 설정이된다
 {
 	int index = m_event_list.InsertString(-1, ap_string);
 	m_event_list.SetCurSel(index); 
@@ -125,11 +125,12 @@ void CclientDlg::AddEventString(const wchar_t* ap_string)
 
 afx_msg LRESULT CclientDlg::OnConnected(WPARAM wParam, LPARAM lParam)
 {
-	if (m_client.ResultOfConnection(lParam) == 1) {
+	if (m_client.ResultOfConnection(lParam) == 1) {  // 서버 접속에 대한 결과를 알려주는 메시지를 처리한다.
 		AddEventString(L"서버에접속하였습니다");
 	}
 	else {
-		AddEventString(L"서버에 접속 할 수 없습니다");
+		AddEventString(L"서버에 접속 할 수 없습니다"); // 접속한 서버에서 데이터를 전송하거나 접속을 해제할 때 발생하는 메시지를 처리한다.
+								
 	}
 
 	return 0;
