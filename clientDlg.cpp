@@ -137,7 +137,7 @@ afx_msg LRESULT CclientDlg::OnConnected(WPARAM wParam, LPARAM lParam)
 }
 
 
-afx_msg LRESULT CclientDlg::OnReadAndClose(WPARAM wParam, LPARAM lParam) // 접속한 서버에서 데이터를 전송하거나 접속을 해제할 때 발생하는 메시지를 처리한다.
+afx_msg LRESULT CclientDlg::OnReadAndClose(WPARAM wParam, LPARAM lParam) { // 접속한 서버에서 데이터를 전송하거나 접속을 해제할 때 발생하는 메시지를 처리한다.
 								       
 	m_client.ProcessServerEvent(wParam, lParam);
 	return 0;
