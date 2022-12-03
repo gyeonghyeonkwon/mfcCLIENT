@@ -42,8 +42,8 @@ BEGIN_MESSAGE_MAP(CclientDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_SEND_BTN, &CclientDlg::OnBnClickedSendBtn)
-	ON_MESSAGE(26001, &CclientDlg::OnConnected)
-	ON_MESSAGE(26002, &CclientDlg::OnReadAndClose)
+	ON_MESSAGE(26001, &CclientDlg::OnConnected)  // 접속한 서버에서 데이터를 전송하거나 접속을 해제할 때 발생하는 메시지를 처리한다.
+	ON_MESSAGE(26002, &CclientDlg::OnReadAndClose)  // 접속한 서버에서 데이터를 전송하거나 접속을 해제할 때 발생하는 메시지를 처리한다.
 END_MESSAGE_MAP()
 
 
@@ -137,8 +137,8 @@ afx_msg LRESULT CclientDlg::OnConnected(WPARAM wParam, LPARAM lParam)
 }
 
 
-afx_msg LRESULT CclientDlg::OnReadAndClose(WPARAM wParam, LPARAM lParam)
-{
+afx_msg LRESULT CclientDlg::OnReadAndClose(WPARAM wParam, LPARAM lParam) // 접속한 서버에서 데이터를 전송하거나 접속을 해제할 때 발생하는 메시지를 처리한다.
+								       
 	m_client.ProcessServerEvent(wParam, lParam);
 	return 0;
 }
